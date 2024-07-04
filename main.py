@@ -1,5 +1,7 @@
+import os
 from classes.map import Map
 from classes.player import Player
+from classes.room import Room
 
 
 def main():
@@ -7,14 +9,25 @@ def main():
     return None
 
 
-def game_loop():
+def setup():
     game_map = Map('First', (3, 3))
+
+    rooms = os.listdir(r'rooms')
+    for room in rooms:
+        with open(room, 'r') as fp:
+            content = fp.read()
 
     player_init_position = 0, 0
 
     player = Player(where=game_map)
 
     player.set_position(player_init_position)
+
+    return player
+
+
+def game_loop():
+    player = setup()
 
     running = True
 
